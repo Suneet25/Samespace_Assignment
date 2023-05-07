@@ -21,6 +21,7 @@ import { FiSearch } from "react-icons/fi";
 import AudioPlayer from "../Components/AudioPlayer";
 import Loader from "../Components/Loader";
 import { debounce } from "lodash";
+import useFetchData from "../Components/customForFetch";
 
 const RecentlyPlayed = ({ artistId }) => {
   const [singleSongs, setsingleSongs] = useState({
@@ -36,9 +37,11 @@ const RecentlyPlayed = ({ artistId }) => {
   const [search, setSearch] = useState("");
   let [toggle, setToggle] = useState(false);
 
-  let { loading, error, data } = useQuery(GET_ALL_SONGS, {
-    variables: { playlistId: 4, search: search },
-  });
+  const [loading, error, data] = useFetchData(4, search);
+
+  // let { loading, error, data } = useQuery(GET_ALL_SONGS, {
+  //   variables: { playlistId: 4, search: search },
+  // });
 
   let debouncedChange = debounce((value) => {
     setSearch(value);
