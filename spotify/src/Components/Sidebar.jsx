@@ -42,19 +42,25 @@ const LinkItems = [
 export default function Sidebar({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box
-      minH="100vh"
-      // bg={useColorModeValue("gray.100", "gray.900")}
-      // bgColor={"rgb(20,14,4)"}
-      display={{ base: "none", md: "block", lg: "block" }}
-      color={"white"}
-    >
+    <Box minH="100vh" color={"white"}>
       <SidebarContent
         onClose={() => onClose}
-        // display={{ base: "none", md: "block" }}
-        width={"100%"}
+        display={{ base: "none", md: "block" }}
       />
-
+      <Drawer
+        autoFocus={false}
+        isOpen={isOpen}
+        placement="left"
+        onClose={onClose}
+        returnFocusOnClose={false}
+        onOverlayClick={onClose}
+        size="xs"
+      >
+        <DrawerContent>
+          <SidebarContent onClose={onClose} />
+        </DrawerContent>
+      </Drawer>
+      {/* mobilenav */}
       <MobileNav display={{ base: "flex", md: "none" }} onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p="4">
         {children}
@@ -66,7 +72,12 @@ export default function Sidebar({ children }) {
 const SidebarContent = ({ onClose, ...rest }) => {
   return (
     <Box
-      // bgColor={"rgb(27,19,5)"}
+      backgroundColor={{
+        base: "rgb(54,20,1)",
+        sm: "rgb(54,20,1)",
+        lg: "transparent",
+        xl: "transparent",
+      }}
       color={"white"}
       w={{ base: "full", md: 60 }}
       pos="fixed"
@@ -138,14 +149,13 @@ const NavItem = ({ icon, children, ...rest }) => {
 
 const MobileNav = ({ onOpen, ...rest }) => {
   return (
-    <Flex
+    <Box
       ml={{ base: 0, md: 60 }}
       px={{ base: 4, md: 24 }}
       height="20"
       alignItems="center"
-      bg={useColorModeValue("white", "gray.900")}
-      borderBottomWidth="1px"
-      borderBottomColor={useColorModeValue("gray.200", "gray.700")}
+      pos={"sticky"}
+      top={0}
       justifyContent="flex-start"
       {...rest}
     >
@@ -155,10 +165,6 @@ const MobileNav = ({ onOpen, ...rest }) => {
         aria-label="open menu"
         icon={<FiMenu />}
       />
-
-      <Text fontSize="2xl" ml="8" fontFamily="monospace" fontWeight="bold">
-        Logo
-      </Text>
-    </Flex>
+    </Box>
   );
 };

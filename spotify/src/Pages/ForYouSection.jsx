@@ -97,34 +97,46 @@ const ForYou = ({ playlistId }) => {
       color={"white"}
       background={backgroundGradient}
       backgroundSize="cover"
-      h={"auto"}
+      width={{ base: "100%", sm: "", md: "", lg: "" }}
     >
       <Flex>
         <Sidebar />
-        <Flex w={"100%"} px={"1rem"} justifyContent={"space-between"}>
+        <Flex
+          mt={{ base: "10", sm: "", md: "", lg: "" }}
+          w={"100%"}
+          direction={{ base: "column-reverse", lg: "row" }}
+          px={{ base: "0", sm: "", md: "", lg: "1rem" }}
+          justifyContent={"space-between"}
+        >
           <Box
-            w={"45%"}
-            padding={"20px"}
-            display={{ base: "none", sm: "none", md: "none", lg: "block" }}
+            w={{ base: "85%", sm: "90%", md: "", lg: "45%" }}
+            padding={{ base: "0px", sm: "", md: "", lg: "20px" }}
+            mt={{ base: "50px", sm: "", md: "", lg: "" }}
           >
             <Box mb="30px">
-              <Heading fontSize={"30px"} textAlign={"left"}>
+              <Heading
+                fontSize={{ lg: "32px", base: "18px" }}
+                textAlign={{ base: "center", lg: "left" }}
+                // display={{ base: "none", lg: "block" }}
+              >
                 For You
               </Heading>
 
               {/* Search Bar */}
-              <InputGroup mt={10}>
+              <InputGroup mt={{ base: 2, lg: 10 }}>
                 <Input
                   border={"none"}
                   backgroundColor={"rgba(255, 255, 255, 0.08)"}
                   onChange={(e) => handleSearch(e)}
-                  w={"550px"}
+                  w={{ lg: "550px", base: "210px", md: "450px" }}
                   placeholder="Search Song, Artist"
                   py={3}
                   px={4}
                   borderRadius={"8px"}
                 />
                 <InputRightElement
+                  display={{ lg: "block", base: "none" }}
+                  top={0}
                   w={"4.5rem"}
                   children={
                     <SearchIcon boxSize={5} mt={2} opacity={"0.2"} mb={2} />
@@ -158,7 +170,10 @@ const ForYou = ({ playlistId }) => {
                       </Box>
 
                       <Box>
-                        <Text textAlign={"left"} fontSize={"18px"}>
+                        <Text
+                          textAlign={"left"}
+                          fontSize={{ lg: "18px", base: "sm", sm: "sm" }}
+                        >
                           {el.title}
                         </Text>
                         <Text textAlign={"left"} opacity={0.4}>
@@ -177,7 +192,10 @@ const ForYou = ({ playlistId }) => {
           </Box>
 
           {/* music player */}
-          <Box width={"50%"}>
+          <Box
+            w={{ base: "90%", sm: "90%", md: "", lg: "45%" }}
+            ml={{ lg: "", base: "4" }}
+          >
             <AudioPlayer
               playlist={Player}
               data={data.getSongs}

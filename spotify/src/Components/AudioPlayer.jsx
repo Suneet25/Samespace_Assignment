@@ -37,7 +37,7 @@ const AudioPlayer = ({ playlist, data, index, onChange }) => {
     audioRef.current.src = data[currentSong].url;
     audioRef.current.load();
   }, [currentSong, data]);
-  console.log(audioRef);
+
   useEffect(() => {
     if (isPlaying) {
       audioRef.current.play();
@@ -54,11 +54,13 @@ const AudioPlayer = ({ playlist, data, index, onChange }) => {
     }
   }, [isMute]);
 
-  const handlePlayPause = () => {
+  const onPause = () => {
     setIsPlaying(!isPlaying);
   };
-
-  const handleNext = () => {
+  useEffect(() => {
+    setIsPlaying(false);
+  }, []);
+  const onNext = () => {
     setCurrentTime(0);
     setCurrentSong((currentSong + 1) % data.length); //This is to ensure that after the last song the first song will be the next song
     setIsPlaying(true);
@@ -66,30 +68,30 @@ const AudioPlayer = ({ playlist, data, index, onChange }) => {
     onChange((currentSong + 1) % data.length);
   };
 
-  const handlePrev = () => {
+  const onPrev = () => {
     setCurrentTime(0);
     setCurrentSong(currentSong === 0 ? data.length - 1 : currentSong - 1);
     onChange(currentSong === 0 ? data.length - 1 : currentSong - 1);
     setIsPlaying(true);
   };
-  const handleMute = () => {
+  const onMute = () => {
     setIsMute(!isMute);
   };
 
-  const handleSliderChange = (value) => {
+  const onSliderChange = (value) => {
     setCurrentTime(value);
     audioRef.current.currentTime = value;
   };
 
-  const handleTimeUpdate = () => {
+  const onTimeUpdate = () => {
     setCurrentTime(audioRef.current.currentTime);
   };
-
+  console.log(isPlaying);
   return (
     <Box width={"100%"}>
       <Box
-        width={"500px"}
-        h={"750px"}
+        width={{ base: "100%", sm: "100%", md: "100%", lg: "500px" }}
+        h="auto"
         pos={{ lg: "fixed", base: "relative" }}
         top={"30px"}
         right={"20px"}
@@ -98,7 +100,7 @@ const AudioPlayer = ({ playlist, data, index, onChange }) => {
         <Box h={"68px"} gap={"8px"}>
           <Text
             fontWeight={700}
-            fontSize={"32px"}
+            fontSize={{ lg: "32px", base: "18px" }}
             lineHeight={"36px"}
             fontStyle={"normal"}
             textAlign={"left"}
@@ -118,8 +120,8 @@ const AudioPlayer = ({ playlist, data, index, onChange }) => {
           </Text>
         </Box>
         <Box
-          width={{ lg: "450px", base: "250px", sm: "100px" }}
-          height={{ lg: "400", base: "250px", sm: "100px" }}
+          width={{ lg: "450px", md: "450px", base: "210px", sm: "100px" }}
+          height={{ lg: "400", md: "500px", base: "210px", sm: "100px" }}
           mt={4}
         >
           <Image
@@ -130,16 +132,15 @@ const AudioPlayer = ({ playlist, data, index, onChange }) => {
           />
         </Box>
 
-        <Box>
+        <Box width={{ lg: "450px", base: "210px", md: "450px", sm: "100px" }}>
           <Slider
             aria-label="slider-ex-1"
             colorScheme="green"
             max={duration}
             value={currentTime}
-            w={{ lg: "90%", base: "30%", sm: "30%" }}
+            w={{ base: "100%", sm: "100%", md: "100%", lg: "100%" }}
             mt="4"
-            mr={{ lg: 10, base: "250px", sm: "250px" }}
-            onChange={handleSliderChange}
+            onChange={onSliderChange}
           >
             <SliderTrack bg="white">
               <SliderFilledTrack />
@@ -148,66 +149,72 @@ const AudioPlayer = ({ playlist, data, index, onChange }) => {
           </Slider>
           <Flex
             justifyContent={"space-between"}
-            mr={{ lg: 12, base: "250px", sm: "250px" }}
+            // mr={{ lg: 0, base: "250px", sm: "250px" }}
             mt={5}
           >
-            <Box>
-              <IconButton
-                size="lg"
-                icon={<SlOptions />}
-                bg={"transparent"}
-                backgroundColor="rgba(255, 255, 255, 0.08)"
-                _hover={{ bg: "rgba(255, 255, 255, 0.08)" }}
-                borderRadius={"50%"}
-              />
-            </Box>
-            <Box>
-              <IconButton
-                onClick={handlePrev}
-                aria-label="previous"
-                bg={"transparent"}
-                _hover={{ bg: "rgba(255, 255, 255, 0.08)" }}
-                icon={<FaBackward />}
-                size="lg"
-                mr="4"
-              />
-              <IconButton
-                onClick={handlePlayPause}
-                aria-label={isPlaying ? "pause" : "play"}
-                bg={"transparent"}
-                _hover={{ bg: "rgba(255, 255, 255, 0.08)" }}
-                icon={isPlaying ? <FaPause /> : <FaPlay />}
-                size="lg"
-                mr="4"
-              />
-              <IconButton
-                onClick={handleNext}
-                aria-label="next"
-                bg={"transparent"}
-                _hover={{ bg: "rgba(255, 255, 255, 0.08)" }}
-                icon={<FaForward />}
-                size="lg"
-              />
-            </Box>
-            <Box>
-              <IconButton
-                onClick={handleMute}
-                size="lg"
-                icon={isMute ? <HiVolumeOff /> : <HiVolumeUp />}
-                bg={"transparent"}
-                backgroundColor="rgba(255, 255, 255, 0.08)"
-                _hover={{ bg: "rgba(255, 255, 255, 0.08)" }}
-                borderRadius={"50%"}
-              />
+            <Box
+              width={{ lg: "100%", base: "210px", md: "450px", sm: "100px" }}
+              display={"flex"}
+              justifyContent={"space-between"}
+            >
+              <Box>
+                <IconButton
+                  size={{ lg: "lg", base: "sm", sm: "sm" }}
+                  icon={<SlOptions />}
+                  bg={"transparent"}
+                  backgroundColor="rgba(255, 255, 255, 0.08)"
+                  _hover={{ bg: "rgba(255, 255, 255, 0.08)" }}
+                  borderRadius={"50%"}
+                />
+              </Box>
+              <Box display={"flex"}>
+                <IconButton
+                  onClick={onPrev}
+                  aria-label="previous"
+                  bg={"transparent"}
+                  _hover={{ bg: "rgba(255, 255, 255, 0.08)" }}
+                  icon={<FaBackward />}
+                  size={{ lg: "lg", base: "sm", sm: "sm" }}
+                  mr="4"
+                />
+                <IconButton
+                  onClick={onPause}
+                  aria-label={isPlaying ? "pause" : "play"}
+                  bg={"transparent"}
+                  _hover={{ bg: "rgba(255, 255, 255, 0.08)" }}
+                  icon={isPlaying ? <FaPause /> : <FaPlay />}
+                  size={{ lg: "lg", base: "sm", sm: "sm" }}
+                  mr="4"
+                />
+                <IconButton
+                  onClick={onNext}
+                  aria-label="next"
+                  bg={"transparent"}
+                  _hover={{ bg: "rgba(255, 255, 255, 0.08)" }}
+                  icon={<FaForward />}
+                  size={{ lg: "lg", base: "sm", sm: "sm" }}
+                />
+              </Box>
+              <Box>
+                <IconButton
+                  onClick={onMute}
+                  size={{ lg: "lg", base: "sm", sm: "sm" }}
+                  icon={isMute ? <HiVolumeOff /> : <HiVolumeUp />}
+                  bg={"transparent"}
+                  backgroundColor="rgba(255, 255, 255, 0.08)"
+                  _hover={{ bg: "rgba(255, 255, 255, 0.08)" }}
+                  borderRadius={"50%"}
+                />
+              </Box>
             </Box>
           </Flex>
 
           <audio
-            onTimeUpdate={handleTimeUpdate}
+            onTimeUpdate={onTimeUpdate}
             autoPlay
             ref={audioRef}
             onLoadedMetadata={() => setDuration(audioRef.current.duration)}
-            onEnded={handleNext}
+            onEnded={onNext}
           />
         </Box>
       </Box>
