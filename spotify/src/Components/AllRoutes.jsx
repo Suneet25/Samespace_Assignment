@@ -2,10 +2,10 @@ import { Box } from "@chakra-ui/react";
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import TopTracks from "../Pages/TopTracks";
-import RecentlyPlayed from "../Pages/RecentlyPlayed";
-import Favorites from "../Pages/Favorites";
-import Foryou from "../Pages/ForYou";
+import TopTracks from "../Pages/TopTracksSection";
+import RecentlyPlayed from "../Pages/RecentlyPlayedSection";
+import Favorites from "../Pages/FavoritesSection";
+import Foryou from "../Pages/ForYouSection";
 const AllRoutes = () => {
   return (
     <Box>

@@ -46,27 +46,15 @@ export default function Sidebar({ children }) {
       minH="100vh"
       // bg={useColorModeValue("gray.100", "gray.900")}
       // bgColor={"rgb(20,14,4)"}
+      display={{ base: "none", md: "block", lg: "block" }}
       color={"white"}
     >
       <SidebarContent
         onClose={() => onClose}
-        display={{ base: "none", md: "block" }}
+        // display={{ base: "none", md: "block" }}
         width={"100%"}
       />
-      {/* <Drawer
-        autoFocus={false}
-        isOpen={isOpen}
-        placement="left"
-        onClose={onClose}
-        returnFocusOnClose={false}
-        onOverlayClick={onClose}
-        size="full"
-      >
-        <DrawerContent>
-          <SidebarContent onClose={onClose} />
-        </DrawerContent>
-      </Drawer> */}
-      {/* mobilenav */}
+
       <MobileNav display={{ base: "flex", md: "none" }} onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p="4">
         {children}

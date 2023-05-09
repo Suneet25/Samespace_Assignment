@@ -1,7 +1,7 @@
-import { Box,  Heading, Spinner } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 import React from "react";
 
-const Loader = () => {
+const Error = () => {
   return (
     <Box
       h={"100vh"}
@@ -16,17 +16,10 @@ const Loader = () => {
         alignItems={"center"}
         minHeight={"100vh"}
       >
-        <Spinner
-          thickness="4px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="green.500"
-          size="xl"
-        />
-        <Heading color={"white"}>Loading...</Heading>
+        <Heading color={"white"}>Error ;) Please refresh the page</Heading>
       </Box>
     </Box>
   );
 };
 
-export default Loader;
+export default Error;

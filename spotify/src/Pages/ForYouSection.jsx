@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../Components/Sidebar";
 import {
   Box,
@@ -16,20 +16,21 @@ import {
 import { SearchIcon } from "@chakra-ui/icons";
 import { useQuery } from "@apollo/client";
 import Loader from "../Components/Loader";
-import MusicPlayer from "../Components/MusicPlayer";
+import AudioPlayer from "../Components/AudioPlayer";
 import { debounce } from "lodash";
 import ColorThief from "colorthief";
 import { GET_ALL_SONGS } from "../Components/APIs_Functions/getSongs";
+import Error from "../Components/Error";
 const ForYou = ({ playlistId }) => {
-  const [activeIndex, SetactiveIndex] = React.useState(0);
-  const [searchTerm, setSearchTerm] = React.useState("");
-  const [Index, setIndex] = React.useState(0);
-  const [currentSongIndex, setCurrentSongIndex] = React.useState(0);
-  const [backgroundGradient, setBackgroundGradient] = React.useState(
+  const [activeIndex, SetactiveIndex] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [Index, setIndex] = useState(0);
+  const [currentSongIndex, setCurrentSongIndex] = useState(0);
+  const [backgroundGradient, setBackgroundGradient] = useState(
     "linear-gradient(160deg, rgba(34,3,2,1) 8%, rgba(1,0,2,1) 90%)"
   );
 
-  const [Player, setPlayer] = React.useState({
+  const [Player, setPlayer] = useState({
     artist: "Weeknd",
     duration: 320,
     photo:
@@ -44,7 +45,7 @@ const ForYou = ({ playlistId }) => {
     variables: { playlistId: 1, search: searchTerm },
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     let myfun = () => {
       try {
         const colorThief = new ColorThief();
@@ -62,7 +63,7 @@ const ForYou = ({ playlistId }) => {
         if (loading) return <Loader />;
       } catch (error) {
         console.log(error);
-        if (error) return <p>Error: {error.message}</p>;
+        if (error) return <Error />;
       }
     };
     myfun();
@@ -89,16 +90,23 @@ const ForYou = ({ playlistId }) => {
     setCurrentSongIndex(i);
   }
 
- 
-
   if (loading) return <Loader />;
-  if (error) return <p>Error: {error.message}</p>;
+  if (error) return <Error />;
   return (
-    <Box color={"white"} background={backgroundGradient} backgroundSize="cover">
+    <Box
+      color={"white"}
+      background={backgroundGradient}
+      backgroundSize="cover"
+      h={"auto"}
+    >
       <Flex>
         <Sidebar />
         <Flex w={"100%"} px={"1rem"} justifyContent={"space-between"}>
-          <Box w={"45%"} padding={"20px"}>
+          <Box
+            w={"45%"}
+            padding={"20px"}
+            display={{ base: "none", sm: "none", md: "none", lg: "block" }}
+          >
             <Box mb="30px">
               <Heading fontSize={"30px"} textAlign={"left"}>
                 For You
@@ -125,7 +133,7 @@ const ForYou = ({ playlistId }) => {
               </InputGroup>
             </Box>
 
-            {/* mapping of the songs */}
+            {/* listing of the songs */}
 
             {data.getSongs?.map((el, i) => (
               <Box
@@ -148,7 +156,7 @@ const ForYou = ({ playlistId }) => {
                           </WrapItem>
                         </Wrap>
                       </Box>
-                      {/* Name and Playlist */}
+
                       <Box>
                         <Text textAlign={"left"} fontSize={"18px"}>
                           {el.title}
@@ -167,10 +175,10 @@ const ForYou = ({ playlistId }) => {
               </Box>
             ))}
           </Box>
-          {/* colortheif ka use krke index match karana hai , get the color and in callback send the color to parent */}
+
           {/* music player */}
           <Box width={"50%"}>
-            <MusicPlayer
+            <AudioPlayer
               playlist={Player}
               data={data.getSongs}
               index={Index}
