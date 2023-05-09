@@ -120,8 +120,8 @@ const AudioPlayer = ({ playlist, data, index, onChange }) => {
           </Text>
         </Box>
         <Box
-          width={{ lg: "450px", md: "450px", base: "210px", sm: "100px" }}
-          height={{ lg: "400", md: "500px", base: "210px", sm: "100px" }}
+          width={{ lg: "450px", base: "100%" }}
+          h={{ base: "auto", sm: "auto", md: "510px", lg: "400px" }}
           mt={4}
         >
           <Image
@@ -132,7 +132,7 @@ const AudioPlayer = ({ playlist, data, index, onChange }) => {
           />
         </Box>
 
-        <Box width={{ lg: "450px", base: "210px", md: "450px", sm: "100px" }}>
+        <Box w={{ base: "100%", sm: "100%", md: "100%", lg: "90%" }}>
           <Slider
             aria-label="slider-ex-1"
             colorScheme="green"
@@ -147,13 +147,9 @@ const AudioPlayer = ({ playlist, data, index, onChange }) => {
             </SliderTrack>
             <SliderThumb />
           </Slider>
-          <Flex
-            justifyContent={"space-between"}
-           
-            mt={5}
-          >
+          <Flex justifyContent={"space-between"} mt={5}>
             <Box
-              width={{ lg: "100%", base: "210px", md: "450px", sm: "100px" }}
+              w={{ base: "100%", sm: "100%", md: "100%", lg: "100%" }}
               display={"flex"}
               justifyContent={"space-between"}
             >

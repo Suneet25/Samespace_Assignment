@@ -127,7 +127,7 @@ const RecentlyPlayed = ({ playlistId }) => {
                   border={"none"}
                   backgroundColor={"rgba(255, 255, 255, 0.08)"}
                   onChange={(e) => handleSearch(e)}
-                  w={{ lg: "550px", base: "210px", md: "450px" }}
+                  w={{ base: "100%", sm: "100%", md: "100%", lg: "100%" }}
                   placeholder="Search Song, Artist"
                   py={3}
                   px={4}
