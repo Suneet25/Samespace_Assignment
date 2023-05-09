@@ -149,7 +149,7 @@ const AudioPlayer = ({ playlist, data, index, onChange }) => {
           </Slider>
           <Flex
             justifyContent={"space-between"}
-            // mr={{ lg: 0, base: "250px", sm: "250px" }}
+           
             mt={5}
           >
             <Box
